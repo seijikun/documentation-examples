@@ -1,17 +1,57 @@
 ﻿using System;
 
-namespace ExampleGenerator
-{
+namespace ExampleGenerator {
 	using OxyPlot;
 	using OxyPlot.Axes;
 	using OxyPlot.Series;
 
-	public class StemSeriesExamples
-	{
-		[Export(@"Series\StemSeries")]
-		public static PlotModel StemSeries()
-		{
+	public class StemSeriesExamples {
 
+		[Export(@"Series\StemSeries")]
+		public static PlotModel StemSeries() {
+
+			var model = new PlotModel{ Title = "Trigonometric functions" };
+
+			var start = -Math.PI;
+			var end = Math.PI;
+			var step = 0.1;
+			int steps = (int)((Math.Abs(start) + Math.Abs(end)) / step);
+
+			//generate points for functions
+			var sinData = new DataPoint[steps];
+			var cosData = new DataPoint[steps];
+			for(int i = 0; i < steps; ++i) {
+				var x = (start + step * i);
+				sinData[i] = new DataPoint(x, 0.5 * Math.Sin(x));
+
+				cosData[i] = new DataPoint(x, Math.Cos(x));
+			}
+
+			//0.5 * sin(x)
+			var sinStemSeries = new StemSeries
+			{
+				MarkerStroke = OxyColors.Green,
+				MarkerType = MarkerType.Circle
+			};
+			sinStemSeries.Points.AddRange(sinData);
+
+			//cos(x)
+			var cosStemSeries = new StemSeries
+			{
+				MarkerStroke = OxyColors.DarkOrange,
+				MarkerType = MarkerType.Circle
+			};
+			cosStemSeries.Points.AddRange(cosData);
+
+			model.Series.Add(sinStemSeries);
+			model.Series.Add(cosStemSeries);
+
+			return model;
+		}
+
+
+		[Export(@"Series\StemSeries_advanced")]
+		public static PlotModel StemSeries_advanced() {
 			var model = new PlotModel{ Title = "Fun with Bats" };
 
 			Func<double, double>[] batFn = new Func<double, double>[]
@@ -22,8 +62,7 @@ namespace ExampleGenerator
 				(x) => (2.71052 + (1.5 - .5 * Math.Abs(x)) - 1.35526 * Math.Sqrt(4 - Math.Pow((Math.Abs(x) - 1), 2))) * Math.Sqrt(Math.Abs(Math.Abs(x) - 1) / (Math.Abs(x) - 1)) + 0.9
 			};
 
-			for(int i = 0; i < batFn.Length; ++i)
-			{
+			for(int i = 0; i < batFn.Length; ++i) {
 				var stemSeries = new StemSeries
 				{
 					Base = 0.0,
@@ -32,8 +71,7 @@ namespace ExampleGenerator
 					MarkerType = MarkerType.Circle
 				};
 
-				for(double x = -8.0; x < 8.0; x += 0.1)
-				{
+				for(double x = -8.0; x < 8.0; x += 0.1) {
 					stemSeries.Points.Add(new DataPoint(x, batFn[i](x)));
 				}
 
