@@ -1,15 +1,16 @@
-﻿using System;
-
-namespace ExampleGenerator {
+﻿namespace ExampleGenerator
+{
+	using System;
 	using OxyPlot;
 	using OxyPlot.Axes;
 	using OxyPlot.Series;
 
-	public class StemSeriesExamples {
+	public class StemSeriesExamples
+	{
 
 		[Export(@"Series\StemSeries")]
-		public static PlotModel StemSeries() {
-
+		public static PlotModel StemSeries()
+		{
 			var model = new PlotModel{ Title = "Trigonometric functions" };
 
 			var start = -Math.PI;
@@ -51,7 +52,8 @@ namespace ExampleGenerator {
 
 
 		[Export(@"Series\StemSeries_advanced")]
-		public static PlotModel StemSeries_advanced() {
+		public static PlotModel StemSeries_advanced()
+		{
 			var model = new PlotModel{ Title = "Fun with Bats" };
 
 			Func<double, double>[] batFn = new Func<double, double>[]
@@ -62,7 +64,8 @@ namespace ExampleGenerator {
 				(x) => (2.71052 + (1.5 - .5 * Math.Abs(x)) - 1.35526 * Math.Sqrt(4 - Math.Pow((Math.Abs(x) - 1), 2))) * Math.Sqrt(Math.Abs(Math.Abs(x) - 1) / (Math.Abs(x) - 1)) + 0.9
 			};
 
-			for(int i = 0; i < batFn.Length; ++i) {
+			for(int i = 0; i < batFn.Length; ++i)
+			{
 				var stemSeries = new StemSeries
 				{
 					Base = 0.0,
@@ -71,7 +74,8 @@ namespace ExampleGenerator {
 					MarkerType = MarkerType.Circle
 				};
 
-				for(double x = -8.0; x < 8.0; x += 0.1) {
+				for(double x = -8.0; x < 8.0; x += 0.1)
+				{
 					stemSeries.Points.Add(new DataPoint(x, batFn[i](x)));
 				}
 
